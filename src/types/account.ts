@@ -5,13 +5,13 @@ export interface EstimateFee extends EstimateFeeResponse {
   suggestedMaxFee: bigint;
 }
 
-export type EstimateFeeBulk = Array<EstimateFee>;
+export type EstimateFeeBulk = EstimateFee[];
 
-export type AccountInvocationsFactoryDetails = {
+export interface AccountInvocationsFactoryDetails {
   versions: bigint[];
   nonce?: BigNumberish;
   blockIdentifier?: BlockIdentifier;
-};
+}
 
 export interface EstimateFeeDetails {
   nonce?: BigNumberish;
@@ -24,12 +24,12 @@ export interface DeployContractResponse {
   transaction_hash: string;
 }
 
-export type MultiDeployContractResponse = {
-  contract_address: Array<string>;
+export interface MultiDeployContractResponse {
+  contract_address: string[];
   transaction_hash: string;
-};
+}
 
-export type DeployContractUDCResponse = {
+export interface DeployContractUDCResponse {
   contract_address: string;
   transaction_hash: string;
   address: string;
@@ -37,25 +37,25 @@ export type DeployContractUDCResponse = {
   unique: string;
   classHash: string;
   calldata_len: string;
-  calldata: Array<string>;
+  calldata: string[];
   salt: string;
-};
+}
 
-export type DeclareDeployUDCResponse = {
-  declare: {
+export interface DeclareDeployUDCResponse {
+  declare: Partial<DeclareTransactionReceiptResponse> & {
     class_hash: BigNumberish;
-  } & Partial<DeclareTransactionReceiptResponse>;
+  };
   deploy: DeployContractUDCResponse;
-};
+}
 
-export type SimulateTransactionDetails = {
+export interface SimulateTransactionDetails {
   nonce?: BigNumberish;
   blockIdentifier?: BlockIdentifier;
   skipValidate?: boolean;
   skipExecute?: boolean;
-};
-
-export enum SIMULATION_FLAG {
-  SKIP_VALIDATE = 'SKIP_VALIDATE',
-  SKIP_EXECUTE = 'SKIP_EXECUTE',
 }
+
+export const SIMULATION_FLAG = {
+  SKIP_VALIDATE: 'SKIP_VALIDATE',
+  SKIP_EXECUTE: 'SKIP_EXECUTE',
+} as const;
